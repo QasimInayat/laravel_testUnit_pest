@@ -7,8 +7,5 @@ composer require pestphp/pest-plugin-laravel --dev<br>
 </pre>
 
 
-
-
-
 ## Test Logic
 <pre>php artisan test --testsuite=Unit</pre>
