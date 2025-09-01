@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_todos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('todos', function (Blueprint $table) {
+            $table->string('image')->nullable()->after('priority');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_todos');
+        Schema::table('todos', function (Blueprint $table) {
+            //
+        });
     }
 };

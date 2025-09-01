@@ -1,16 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+use App\Services\SlugService;
 
-use PHPUnit\Framework\TestCase;
+test('it generates a slug correctly', function () {
+    $service = new SlugService();
+    $slug = $service->generate('Hello World');
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_that_true_is_true(): void
-    {
-        $this->assertTrue(true);
-    }
-}
+    expect($slug)->toBe('hello-world');
+});
+

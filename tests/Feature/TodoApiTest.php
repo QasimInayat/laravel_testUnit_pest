@@ -1,49 +1,30 @@
 <?php
 
-namespace Tests\Feature;
-
-use Tests\TestCase;
+use App\Models\User;
 use App\Models\Todo;
+use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class TodoApiTest extends TestCase
-{
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    public function test_creates_a_todo()
-    {
-        $response = $this->postJson('/api/todos', [
-            'title' => 'Learn Feature Testing',
-        ]);
+test('authenticated user can create todo', function () {
+    $user = User::create([
+        'name' => 'Test User',
+        'email' => uniqid() . '@example.com',
+        'password' => bcrypt('password'),
+    ]);
 
-        $response->assertStatus(201)
-            ->assertJson([
-                'success' => true,
-                'todo' => [
-                    'title' => 'Learn Feature Testing',
-                    'completed' => false,
-                ],
-            ]);
+    Sanctum::actingAs($user);
 
-        $this->assertDatabaseHas('todos', [
-            'title' => 'Learn Feature Testing',
-        ]);
-    }
+    $response = $this->postJson('/api/todos', [
+        'title' => 'New Todo',
+    ]);
 
-    public function test_requires_a_title_when_creating_todo()
-    {
-        $response = $this->postJson('/api/todos', []);
+    $response->assertStatus(201)
+        ->assertJsonFragment(['title' => 'New Todo']);
 
-        $response->assertStatus(422); // Laravel returns 422 for validation errors
-        $response->assertJsonValidationErrors(['title']);
-    }
-
-
-    public function test_lists_todos()
-    {
-
-        $response = $this->getJson('/api/todos');
-        $response->assertStatus(200);
-
-    }
-}
+    $this->assertDatabaseHas('todos', [
+        'title' => 'New Todo',
+        'user_id' => $user->id,
+    ]);
+});

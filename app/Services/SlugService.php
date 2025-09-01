@@ -4,17 +4,8 @@ namespace App\Services;
 
 class SlugService
 {
-    public function generate(string $string): string
+    public function generate(string $title): string
     {
-        // Convert to lowercase
-        $slug = strtolower($string);
-        // Replace spaces and special characters with hyphens
-        $slug = preg_replace('/[^a-z0-9]+/i', '-', $slug);
-        // Trim hyphens from the beginning and end
-        $slug = trim($slug, '-');
-
-        return $slug;
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
     }
 }
-
-

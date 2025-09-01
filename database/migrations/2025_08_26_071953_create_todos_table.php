@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->boolean('completed')->default(false);
+            $table->text('description')->nullable();
+            $table->boolean('is_done')->default(false);
+            $table->date('due_date')->nullable();
+            $table->unsignedTinyInteger('priority')->default(3); // 1=high, 3=normal, 5=low
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
