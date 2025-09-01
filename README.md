@@ -1,4 +1,4 @@
-##Logic Testing
+## Logic Testing
 <pre>php artisan make:test SlugServiceTest --unit</pre>
 <p>
 - This command creates a Unit Test. Files inside the Unit folder are used to test only logic and data without involving the database.<br>
@@ -7,7 +7,7 @@
 <pre>php artisan test --testsuite=Unit</pre>
 
 
-##Testing With Database, Routes, Middleware and ......
+## Testing With Database, Routes, Middleware and ......
 <p>Change the credentials in phpunit.xml (can bee seen on the root)</p>
 
 <pre>php artisan make:test TodoApiTestphp</pre>
